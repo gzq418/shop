@@ -4,17 +4,23 @@ import Login from '../views/Login.vue'
 import Home from '../views/Home.vue'
 import Welcome from '../components/Welcome.vue'
 import Users from '../components/user/Users.vue'
+import Right from '../components/power/right.vue'
+import Role from '../components/power/role.vue'
+import Cate from '../components/goods/Cate.vue'
 Vue.use(VueRouter)
 
 const routes = [
   //重定向
-  { path: '/', redirect: '/Login' },
-  { path: '/Login', component: Login },
+  { path: '/', redirect: '/login' },
+  { path: '/login', component: Login },
   {
-    path: '/Home', component: Home, redirect: '/Welcome',
+    path: '/home', component: Home, redirect: '/welcome',
     children: [
-      { path: '/Welcome', component: Welcome },
+      { path: '/welcome', component: Welcome },
       {path:'/users',component:Users},
+      {path:'/rights',component:Right},
+      {path:'/roles',component:Role},
+      {path:'/categories',component:Cate}
     ]
   }
 
@@ -29,10 +35,10 @@ router.beforeEach((to, from, next) => {
   //to将要访问的路径
   //from从哪里来
   //next是一个函数，表示放行 
-  if (to.path === '/Login') return next();
+  if (to.path === '/login') return next();
   //获取token
   const tokenStr = window.sessionStorage.getItem('token');
-  if (!tokenStr) return next('/Login')
+  if (!tokenStr) return next('/login')
   next();
 })
 
